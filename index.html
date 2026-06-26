@@ -27,5 +27,56 @@
             <p>Don't have an account? <a href="#">Register here</a></p>
         </div>
     </div>
+    <script type="module">
+  // Import Firebase functions (using modular SDK)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
+
+  // TODO: Add your Firebase project configuration here
+  
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyA3tPeBCh0YruFK-951JBAAEzl_nGDJN7U",
+  authDomain: "studyai-b545e.firebaseapp.com",
+  projectId: "studyai-b545e",
+  storageBucket: "studyai-b545e.firebasestorage.app",
+  messagingSenderId: "952675629967",
+  appId: "1:952675629967:web:45970387ab2f4cb33aa9fa",
+  measurementId: "G-9VFM4F6GVR"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Handle form submission
+  const loginForm = document.getElementById('loginForm');
+  loginForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Successfully signed in
+        alert("Welcome back!");
+        window.location.href = "dashboard.html"; // Redirect to dashboard
+      })
+      .catch((error) => {
+        alert("Error: " + error.message);
+      });
+  });
+    </script>
+    
 </body>
 </html>
