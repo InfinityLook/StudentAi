@@ -19,36 +19,39 @@
     </div>
 
     <script>
-        // Nahraďte tímto:
-const supabase = supabase.createClient(
-  'https://hyjfojopykwtuogjvbdf.supabase.co', 
-  'sb_publishable_e2OLtHBny_1llX2T_OeAKg_TuBDRyf4...' );
+    const supabase = supabase.createClient('https://hyjfojopykwtuogjvbdf.supabase.co', 'sb_publishable_e2OLtHbny_1llX2T...');
+
+    // Sign Up
+    document.getElementById('signUpBtn').addEventListener('click', async () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
         
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        
+        if (error) {
+            alert("Error: " + error.message);
+        } else {
+            alert("Success! Check your email to confirm your account.");
+        }
+    });
 
-        const form = document.getElementById('authForm');
-        const emailInput = document.getElementById('email');
-        const passwordInput = document.getElementById('password');
-
-        // Sign In
-        document.getElementById('signInBtn').addEventListener('click', async (e) => {
-            e.preventDefault();
-            const { error } = await supabase.auth.signInWithPassword({
-                email: emailInput.value,
-                password: passwordInput.value
-            });
-            if (error) alert(error.message);
-            else window.location.href = 'dashboard.html';
-        });
-
-        // Sign Up
-        document.getElementById('signUpBtn').addEventListener('click', async () => {
-            const { error } = await supabase.auth.signUp({
-                email: emailInput.value,
-                password: passwordInput.value
-            });
-            if (error) alert(error.message);
-            else alert('Check your email for confirmation!');
-        });
+    // Sign In
+    document.getElementById('signInBtn').addEventListener('click', async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        
+        if (error) {
+            alert("Login failed: " + error.message);
+        } else {
+            alert("Login successful! Redirecting...");
+            window.location.href = 'dashboard.html';
+        }
+    });
     </script>
+    
+     
 </body>
 </html>
