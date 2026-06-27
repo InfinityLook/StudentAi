@@ -19,7 +19,19 @@
     <button id="signInBtn">Přihlásit se</button>
     <button id="signUpBtn">Registrovat</button>
 </div>
+ <script>
+        alert("Skript běží!");
+        
+        const supabase = supabase.createClient(
+            'https://hyjfojopykwtuogjvbdf.supabase.co', 
+            'sb_publishable_e2OLtHbny_1llX2T...'
+        );
 
+        document.getElementById('signUpBtn').onclick = async () => {
+            alert("Tlačítko kliknuto");
+        };
+ </script>
+    
 <script>
     // Inicializace Supabase
     const supabase = supabase.createClient(
