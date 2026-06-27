@@ -3,39 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudentAi - Přihlášení</title>
-    <link rel="stylesheet" href="style.css">
+    <title>StudentAi</title>
+    
+    <!-- Správné načtení knihovny Supabase -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="login-container">
     <h1>StudentAi</h1>
-    <input type="email" id="email" placeholder="Váš email">
+    <input type="email" id="email" placeholder="Email">
     <input type="password" id="password" placeholder="Heslo">
     <button id="signInBtn">Přihlásit se</button>
     <button id="signUpBtn">Registrovat</button>
 </div>
 
 <script>
-    const supabase = supabase.createClient('https://hyjfojopykwtuogjvbdf.supabase.co', 'sb_publishable_e2OLtHBny_1llX2T_OeAKg_TuBDRyf4');
-
-    // Přihlášení
-    document.getElementById('signInBtn').addEventListener('click', async () => {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) alert("Chyba: " + error.message);
-        else window.location.href = 'dashboard.html';
-    });
+    // Inicializace Supabase
+    const supabase = supabase.createClient(
+        'https://hyjfojopykwtuogjvbdf.supabase.co', 
+        'sb_publishable_e2OLtHBny_1llX2T_OeAKg_TuBDRyf4'
+    );
 
     // Registrace
     document.getElementById('signUpBtn').addEventListener('click', async () => {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
+        
         const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) alert("Chyba: " + error.message);
-        else alert("Účet vytvořen! Nyní se můžete přihlásit.");
+        
+        if (error) {
+            alert("Chyba při registraci: " + error.message);
+        } else {
+            alert("Registrace úspěšná! Podívejte se do Supabase.");
+        }
+    });
+
+    // Přihlášení
+    document.getElementById('signInBtn').addEventListener('click', async () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        
+        if (error) {
+            alert("Chyba při přihlášení: " + error.message);
+        } else {
+            alert("Přihlášení úspěšné!");
+            window.location.href = 'dashboard.html';
+        }
     });
 </script>
 
