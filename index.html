@@ -1,51 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="cs">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>StudentAi - Login</title>
+    <title>StudentAi - Přihlášení</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-    <div class="login-container">
-        <h1>StudentAi</h1>
-        <form id="authForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="Password" required>
-            <button type="submit" id="signInBtn" class="btn-primary">Sign In</button>
-            <button type="button" id="signUpBtn" class="btn-secondary">Sign Up</button>
-        </form>
-    </div>
 
-    <script>
-    // 1. Ověření, že se skript vůbec spustil
-    console.log("Script loaded!");
-    alert("Script is running!");
+<div class="login-container">
+    <h1>StudentAi</h1>
+    <input type="email" id="email" placeholder="Váš email">
+    <input type="password" id="password" placeholder="Heslo">
+    <button id="signInBtn">Přihlásit se</button>
+    <button id="signUpBtn">Registrovat</button>
+</div>
 
+<script>
     const supabase = supabase.createClient('https://hyjfojopykwtuogjvbdf.supabase.co', 'sb_publishable_e2OLtHbny_1llX2T...');
 
-    // 2. Přidání "odposlechu" na kliknutí
-    document.getElementById('signUpBtn').addEventListener('click', async () => {
-        alert("Sign Up button clicked!"); // Toto nám potvrdí, že tlačítko funguje
-        
+    // Přihlášení
+    document.getElementById('signInBtn').addEventListener('click', async () => {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
-        
-        try {
-            const { data, error } = await supabase.auth.signUp({ email, password });
-            if (error) {
-                alert("Supabase Error: " + error.message);
-            } else {
-                alert("Success! Check Supabase.");
-            }
-        } catch (e) {
-            alert("Crash error: " + e.message);
-        }
+        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) alert("Chyba: " + error.message);
+        else window.location.href = 'dashboard.html';
     });
-    </script>
-    
-    
-     
+
+    // Registrace
+    document.getElementById('signUpBtn').addEventListener('click', async () => {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const { data, error } = await supabase.auth.signUp({ email, password });
+        if (error) alert("Chyba: " + error.message);
+        else alert("Účet vytvořen! Nyní se můžete přihlásit.");
+    });
+</script>
+
 </body>
 </html>
+
