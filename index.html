@@ -3,80 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="manifest" href="manifest.json">
+    <title>StudentAi - Login</title>
     <link rel="stylesheet" href="style.css">
-    <title>StudentAi - Sign In</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
     <div class="login-container">
         <h1>StudentAi</h1>
-        <p>Welcome back, continue your journey.</p>
-        
-        <form id="loginForm">
-            <div class="input-group">
-                <input type="email" id="email" placeholder="Email Address" required>
-            </div>
-            <div class="input-group">
-                <input type="password" id="password" placeholder="Password" required>
-            </div>
-            <button type="submit" class="btn-primary">Sign In</button>
+        <form id="authForm">
+            <input type="email" id="email" placeholder="Email" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit" id="signInBtn" class="btn-primary">Sign In</button>
+            <button type="button" id="signUpBtn" class="btn-secondary">Sign Up</button>
         </form>
-        
-        <div class="login-footer">
-            <a href="#">Forgot password?</a>
-            <p>Don't have an account? <a href="#">Register here</a></p>
-        </div>
     </div>
-    <script type="module">
-  // Import Firebase functions (using modular SDK)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-  import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-auth.js";
 
-  // TODO: Add your Firebase project configuration here
-  
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+    <script>
+        // Nahraďte tímto:
+const supabase = supabase.createClient(
+  'https://hyjfojopykwtuogjvbdf.supabase.co', 
+  'sb_publishable_e2OLtHbny_1llX2T...' );
+        
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyA3tPeBCh0YruFK-951JBAAEzl_nGDJN7U",
-  authDomain: "studyai-b545e.firebaseapp.com",
-  projectId: "studyai-b545e",
-  storageBucket: "studyai-b545e.firebasestorage.app",
-  messagingSenderId: "952675629967",
-  appId: "1:952675629967:web:45970387ab2f4cb33aa9fa",
-  measurementId: "G-9VFM4F6GVR"
-};
+        const form = document.getElementById('authForm');
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+        // Sign In
+        document.getElementById('signInBtn').addEventListener('click', async (e) => {
+            e.preventDefault();
+            const { error } = await supabase.auth.signInWithPassword({
+                email: emailInput.value,
+                password: passwordInput.value
+            });
+            if (error) alert(error.message);
+            else window.location.href = 'dashboard.html';
+        });
 
-  // Handle form submission
-  const loginForm = document.getElementById('loginForm');
-  loginForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Successfully signed in
-        alert("Welcome back!");
-        window.location.href = "dashboard.html"; // Redirect to dashboard
-      })
-      .catch((error) => {
-        alert("Error: " + error.message);
-      });
-  });
+        // Sign Up
+        document.getElementById('signUpBtn').addEventListener('click', async () => {
+            const { error } = await supabase.auth.signUp({
+                email: emailInput.value,
+                password: passwordInput.value
+            });
+            if (error) alert(error.message);
+            else alert('Check your email for confirmation!');
+        });
     </script>
-    
 </body>
 </html>
