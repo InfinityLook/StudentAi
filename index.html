@@ -32,42 +32,7 @@
         };
  </script>
     
-<script>
-    // Inicializace Supabase
-    const supabase = supabase.createClient(
-        'https://hyjfojopykwtuogjvbdf.supabase.co', 
-        'sb_publishable_e2OLtHBny_1llX2T_OeAKg_TuBDRyf4'
-    );
 
-    // Registrace
-    document.getElementById('signUpBtn').addEventListener('click', async () => {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        
-        if (error) {
-            alert("Chyba při registraci: " + error.message);
-        } else {
-            alert("Registrace úspěšná! Podívejte se do Supabase.");
-        }
-    });
-
-    // Přihlášení
-    document.getElementById('signInBtn').addEventListener('click', async () => {
-        const email = document.getElementById('email').value;
-        const password = document.getElementById('password').value;
-        
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        
-        if (error) {
-            alert("Chyba při přihlášení: " + error.message);
-        } else {
-            alert("Přihlášení úspěšné!");
-            window.location.href = 'dashboard.html';
-        }
-    });
-</script>
 
 </body>
 </html>
