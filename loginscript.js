@@ -1,7 +1,7 @@
 // script.js
 const supabase = supabase.createClient(
     'https://hyjfojopykwtuogjvbdf.supabase.co', 
-    'sb_publishable_e2OLtHbny_1llX2T...'
+    'sb_publishable_e2OLtHBny_1llX2T_OeAKg_TuBDRyf4'
 );
 
 document.addEventListener('DOMContentLoaded', () => {
